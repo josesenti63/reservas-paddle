@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Disponibilidad · Reservas Paddle{% endblock %}
+
+{% block contenido %}
+
+<!-- Encabezado -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="mb-0 fw-800">Disponibilidad</h4>
+        <p class="text-muted small mb-0 mt-1">
+            Consultá y reservá tu turno desde el celular
+        </p>
+    </div>
+    {% if user.is_authenticated %}
+    <a href="{% url 'reservas:crear_reserva' %}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i>
+        <span class="d-none d-sm-inline">Nueva reserva</span>
+    </a>
+    {% endif %}
+</div>
+
+<!-- Selector de fecha -->
+<div class="selector fecha mb-4">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col">
+            <label class="form-label">Fecha</label>
+                <input
+                    type="date"
+                    name="fecha"
+                    class="form-control"
+                    value="{{ fecha|date:'Y-m-d' }}"
+                    min="{{ hoy|date:'Y-m-d' }}"
+                >
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-search"></i> Ver
+            </button>
+        </div>
+        {% if fecha != hoy %}
+        <div class="col-auto">
+            <a href="/" class="btn btn-outline-secondary">Hoy</a>
+        </div>
+        {% endif %}
+    </form>
+</div>
+
+<!-- Tabla de disponibilidad -->
+{% if canchas and horarios %}
+
+<div class="card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <span>
+            <i class="bi bi-calendar-event text-verde me-2"></i>
+            <strong>{{ fecha|date:"l j \d\e F \d\e Y"|capfirst }}</strong>
+        </span>
+        <span class="badge bg-light text-muted border">
+            {{ canchas|length }} cancha{{ canchas|length|pluralize }}
+        </span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table tabla-disponibilidad mb-0">
+            <thead>
+                <tr>
+                    <th class="text-start">Horario</th>
+                    {% for cancha in canchas %}
+                    <th class="text-center">{{ cancha.nombre }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for horario, canchas_estado in disponibilidad.items %}
+                <tr>
+                    <td class="td-horario">
+                        {{ horario.hora_inicio|time:"H:i" }}
+                        <span class="text-muted fw-normal"></span>
+                        {{ horario.hora_fin|time:"H:i" }}
+                    </td>
+                    {% for cancha, libre in canchas_estado.items %}
+                    <td class="text-center">
+                        {% if libre %}
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'reservas:crear_reserva' %}?fecha={{ fecha|date:'Y-m-d' }}&cancha={{ cancha.id }}&horario={{ horario.id }}"
+                               class="badge-slot badge-libre">
+                                    Libre
+                            </a>
+                            {% else %}
+                                <span class="badge-slot badge-libre">Libre</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="badge-slot badge-ocupada">Ocupada</span>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Leyenda -->
+<div class="mt-3 d-flex flex-wrap gap-3 align-items-center">
+    <span class="badge-slot badge-libre">Libre</span>
+    <span class="text-muted small">Disponible · tocá para reservar</span>
+    <span class="badge-slot badge-ocupada ms-2 ms-sm-4">Ocupada</span>
+    <span class="text-muted small">No disponible</span>
+</div>
+ 
+{% if not user.is_authenticated %}
+<div class="alert alert-info mt-4">
+    <i class="bi bi-person-lock me-2"></i>
+    Iniciá sesión para poder hacer una reserva.
+    <a href="{% url 'reservas:crear_reserva' %}" class="alert-link ms-1">Ingresar →</a>
+</div>
+{% endif %}
+ 
+{% else %}
+<div class="card">
+    <div class="card-body empty-state">
+        <span class="empty-icon">🎾</span>
+        <p>Todavía no hay canchas u horarios configurados.</p>
+        {% if user.is_staff %}
+        <a href="/admin/canchas/" class="btn btn-success">
+            Configurar desde el admin
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

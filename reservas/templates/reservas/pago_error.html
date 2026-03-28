@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Pago rechazado · Reservas Paddle{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-5">
+    <div class="card text-center" style="border-top: 4px solid #dc3545 !important;">
+      <div class="card-body p-5">
+
+        <div style="font-size:3rem; margin-bottom:1rem;">❌</div>
+        <h4 class="fw-800 mb-2">Pago no procesado</h4>
+        <p class="text-muted mb-4">
+          El pago fue rechazado o cancelado. Tu reserva sigue pendiente,
+          podés intentarlo de nuevo cuando quieras.
+        </p>
+
+        <div class="d-grid gap-2">
+          <a href="{% url 'reservas:pago' reserva.id %}" class="btn btn-success btn-lg">
+            <i class="bi bi-arrow-repeat me-1"></i> Intentar de nuevo
+          </a>
+          <a href="{% url 'reservas:mis_reservas' %}" class="btn btn-outline-secondary">
+            Ver mis reservas
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

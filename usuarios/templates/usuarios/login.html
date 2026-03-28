@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Iniciar sesión · Reservas Paddle{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-4">
+
+    <!-- Encabezado -->
+    <div class="text-center mb-4">
+      <div style="font-size:2.2rem; margin-bottom:0.5rem;">🔐</div>
+      <h4 class="fw-800 mb-1">Iniciar sesión</h4>
+      <p class="text-muted small">
+        ¿No tenés cuenta?
+        <a href="{% url 'usuarios:registro' %}" class="text-verde fw-600">Registrate →</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-body p-4">
+
+        <!-- Error de autenticación -->
+        {% if error %}
+        <div class="alert alert-danger">
+          <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <!-- Usuario -->
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              placeholder="Tu nombre de usuario"
+              autocomplete="username"
+              autofocus
+              required
+            >
+          </div>
+
+          <!-- Contraseña -->
+          <div class="mb-4">
+            <label class="form-label">Contraseña</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              placeholder="Tu contraseña"
+              autocomplete="current-password"
+              required
+            >
+          </div>
+
+          <!-- Botón -->
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Ingresar
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- Link al admin para el responsable del club -->
+    <p class="text-center text-muted small mt-3">
+      ¿Sos administrador del club?
+      <a href="/admin/" class="text-muted">Panel de administración →</a>
+    </p>
+
+  </div>
+</div>
+{% endblock %}

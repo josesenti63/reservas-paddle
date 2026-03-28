@@ -1,0 +1,350 @@
+/* =========================================================
+   Reservas Paddle — estilos personalizados
+   Complementa Bootstrap 5, enfocado en mobile-first
+   ========================================================= */
+
+/* ── Variables ─────────────────────────────────────────── */
+:root {
+  --verde:        #1a7a4a;
+  --verde-oscuro: #115c36;
+  --verde-claro:  #e8f5ee;
+  --verde-suave:  #d1ead9;
+  --gris-fondo:   #f4f6f4;
+  --gris-borde:   #dee2e0;
+  --texto:        #1c2b22;
+  --texto-suave:  #5a6b60;
+  --blanco:       #ffffff;
+  --sombra:       0 2px 8px rgba(26, 122, 74, 0.10);
+  --sombra-hover: 0 4px 16px rgba(26, 122, 74, 0.18);
+  --radio:        12px;
+  --radio-sm:     8px;
+  --transicion:   all 0.2s ease;
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--gris-fondo);
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Navbar ─────────────────────────────────────────────── */
+.navbar {
+  background: var(--verde-oscuro) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  padding: 0.75rem 0;
+}
+.navbar-brand {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.3px;
+  color: var(--blanco) !important;
+}
+.navbar-brand span {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-right: 6px;
+  font-size: 1rem;
+}
+.nav-link {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85) !important;
+  padding: 0.5rem 0.85rem !important;
+  border-radius: var(--radio-sm);
+  transition: var(--transicion);
+}
+.nav-link:hover {
+  color: var(--blanco) !important;
+  background: rgba(255,255,255,0.12);
+}
+
+/* ── Cards ──────────────────────────────────────────────── */
+.card {
+  border: 1px solid var(--gris-borde) !important;
+  border-radius: var(--radio) !important;
+  box-shadow: var(--sombra);
+  transition: var(--transicion);
+}
+.card:hover {
+  box-shadow: var(--sombra-hover);
+}
+.card-header {
+  border-radius: var(--radio) var(--radio) 0 0 !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.card-footer {
+  border-radius: 0 0 var(--radio) var(--radio) !important;
+  background: var(--gris-fondo) !important;
+}
+
+/* ── Botones ─────────────────────────────────────────────── */
+.btn {
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: var(--radio-sm);
+  padding: 0.55rem 1.2rem;
+  transition: var(--transicion);
+  letter-spacing: 0.01em;
+}
+.btn-success {
+  background: var(--verde) !important;
+  border-color: var(--verde) !important;
+}
+.btn-success:hover {
+  background: var(--verde-oscuro) !important;
+  border-color: var(--verde-oscuro) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26,122,74,0.3);
+}
+.btn-lg {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: var(--radio);
+}
+.btn-outline-success {
+  color: var(--verde) !important;
+  border-color: var(--verde) !important;
+}
+.btn-outline-success:hover {
+  background: var(--verde) !important;
+  color: var(--blanco) !important;
+}
+
+/* ── Formularios ────────────────────────────────────────── */
+.form-control,
+.form-select {
+  border-radius: var(--radio-sm);
+  border-color: var(--gris-borde);
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  transition: var(--transicion);
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(26, 122, 74, 0.12);
+}
+.form-label {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--texto-suave);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.form-text {
+  color: var(--texto-suave);
+  font-size: 0.82rem;
+}
+
+/* ── Tabla de disponibilidad ────────────────────────────── */
+.tabla-disponibilidad {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.tabla-disponibilidad th {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-suave);
+  background: var(--gris-fondo);
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--gris-borde);
+}
+.tabla-disponibilidad td {
+  padding: 0.65rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.tabla-disponibilidad tr:last-child td {
+  border-bottom: none;
+}
+.td-horario {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--texto);
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+/* ── Badges de disponibilidad ───────────────────────────── */
+.badge-slot {
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: var(--transicion);
+  text-decoration: none;
+  min-width: 80px;
+  text-align: center;
+}
+.badge-libre {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+  border: 1.5px solid var(--verde-suave);
+}
+a.badge-libre:hover {
+  background: var(--verde);
+  color: var(--blanco);
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(26,122,74,0.25);
+}
+.badge-ocupada {
+  background: #fce8e8;
+  color: #8b1a1a;
+  border: 1.5px solid #f5c6c6;
+  cursor: default;
+}
+
+/* ── Selector de fecha ──────────────────────────────────── */
+.selector-fecha {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--gris-borde);
+  box-shadow: var(--sombra);
+}
+
+/* ── Cards de reserva ───────────────────────────────────── */
+.card-reserva {
+  border-left: 4px solid var(--verde) !important;
+  transition: var(--transicion);
+}
+.card-reserva:hover {
+  transform: translateY(-2px);
+}
+.card-reserva .cancha-nombre {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texto);
+}
+.card-reserva .reserva-meta {
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+.card-reserva .reserva-meta i {
+  width: 16px;
+  color: var(--verde);
+}
+
+/* ── Badges de estado ───────────────────────────────────── */
+.badge-estado {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge-confirmada {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+  border: 1px solid var(--verde-suave);
+}
+.badge-pendiente {
+  background: #fff8e6;
+  color: #7a5c00;
+  border: 1px solid #fde68a;
+}
+.badge-cancelada {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+/* ── Mensajes del sistema ───────────────────────────────── */
+.alert {
+  border-radius: var(--radio-sm);
+  font-size: 0.9rem;
+  border: none;
+  border-left: 4px solid;
+}
+.alert-success {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+  border-left-color: var(--verde);
+}
+.alert-danger {
+  background: #fce8e8;
+  color: #8b1a1a;
+  border-left-color: #dc3545;
+}
+.alert-warning {
+  background: #fff8e6;
+  color: #7a5c00;
+  border-left-color: #f59e0b;
+}
+.alert-info {
+  background: #e8f0fe;
+  color: #1a3a6b;
+  border-left-color: #3b82f6;
+}
+
+/* ── Título de sección ──────────────────────────────────── */
+.seccion-titulo {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--texto-suave);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.seccion-titulo::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gris-borde);
+}
+
+/* ── Empty state ────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--texto-suave);
+}
+.empty-state .empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  opacity: 0.4;
+}
+.empty-state p {
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+footer {
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+  border-top: 1px solid var(--gris-borde) !important;
+}
+
+/* ── Utilidades ─────────────────────────────────────────── */
+.text-verde { color: var(--verde) !important; }
+.bg-verde-claro { background: var(--verde-claro) !important; }
+.fw-800 { font-weight: 800 !important; }
+
+/* ── Responsive: ajustes para pantallas chicas ──────────── */
+@media (max-width: 576px) {
+  .navbar-brand { font-size: 1rem; }
+  .tabla-disponibilidad th,
+  .tabla-disponibilidad td { padding: 0.5rem 0.6rem; }
+  .badge-slot { min-width: 64px; font-size: 0.72rem; padding: 0.4rem 0.7rem; }
+  .td-horario { font-size: 0.82rem; min-width: 90px; }
+  .card-body { padding: 1rem !important; }
+  h4 { font-size: 1.1rem; }
+  .btn-lg { font-size: 0.95rem; padding: 0.7rem 1.2rem; }
+}

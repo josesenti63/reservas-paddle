@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Pago confirmado · Reservas Paddle{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-5">
+    <div class="card text-center" style="border-top: 4px solid var(--verde) !important;">
+      <div class="card-body p-5">
+
+        <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
+        <h4 class="fw-800 mb-2">¡Pago confirmado!</h4>
+        <p class="text-muted mb-4">
+          Tu reserva quedó confirmada. ¡Nos vemos en la cancha!
+        </p>
+
+        <!-- Resumen -->
+        <div class="bg-light rounded-3 p-3 text-start mb-4">
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted small">Cancha</span>
+            <span class="fw-600">{{ reserva.cancha.nombre }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted small">Fecha</span>
+            <span class="fw-600">{{ reserva.fecha|date:"l j \d\e F"|capfirst }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="text-muted small">Horario</span>
+            <span class="fw-600">
+              {{ reserva.horario.hora_inicio|time:"H:i" }} –
+              {{ reserva.horario.hora_fin|time:"H:i" }}
+            </span>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <a href="{% url 'reservas:mis_reservas' %}" class="btn btn-success btn-lg">
+            <i class="bi bi-card-list me-1"></i> Ver mis reservas
+          </a>
+          <a href="{% url 'reservas:inicio' %}" class="btn btn-outline-secondary">
+            Volver al inicio
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

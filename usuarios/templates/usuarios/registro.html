@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Registrarse · Reservas Paddle{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-7 col-lg-5">
+
+    <!-- Encabezado -->
+    <div class="text-center mb-4">
+      <div style="font-size:2.2rem; margin-bottom:0.5rem;">🎾</div>
+      <h4 class="fw-800 mb-1">Creá tu cuenta</h4>
+      <p class="text-muted small">
+        ¿Ya tenés cuenta?
+        <a href="{% url 'usuarios:login' %}" class="text-verde fw-600">Iniciá sesión →</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-body p-4">
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <!-- Nombre y Apellido en fila -->
+          <div class="row g-3 mb-3">
+            <div class="col-6">
+              <label class="form-label">{{ form.first_name.label }}</label>
+              {{ form.first_name }}
+              {% if form.first_name.errors %}
+              <div class="text-danger small mt-1">{{ form.first_name.errors|join:", " }}</div>
+              {% endif %}
+            </div>
+            <div class="col-6">
+              <label class="form-label">{{ form.last_name.label }}</label>
+              {{ form.last_name }}
+              {% if form.last_name.errors %}
+              <div class="text-danger small mt-1">{{ form.last_name.errors|join:", " }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="text-danger small mt-1">{{ form.email.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Teléfono -->
+          <div class="mb-3">
+            <label class="form-label">{{ form.telefono.label }}</label>
+            {{ form.telefono }}
+            <div class="form-text">Opcional · para recordatorios por WhatsApp</div>
+            {% if form.telefono.errors %}
+            <div class="text-danger small mt-1">{{ form.telefono.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Usuario -->
+          <div class="mb-3">
+            <label class="form-label">{{ form.username.label }}</label>
+            {{ form.username }}
+            {% if form.username.help_text %}
+            <div class="form-text">{{ form.username.help_text }}</div>
+            {% endif %}
+            {% if form.username.errors %}
+            <div class="text-danger small mt-1">{{ form.username.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <hr class="my-3" style="border-color: var(--gris-borde);">
+
+          <!-- Contraseñas -->
+          <div class="mb-3">
+            <label class="form-label">{{ form.password1.label }}</label>
+            {{ form.password1 }}
+            {% if form.password1.help_text %}
+            <div class="form-text">{{ form.password1.help_text }}</div>
+            {% endif %}
+            {% if form.password1.errors %}
+            <div class="text-danger small mt-1">{{ form.password1.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">{{ form.password2.label }}</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <div class="text-danger small mt-1">{{ form.password2.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger mb-3">
+            {% for error in form.non_field_errors %}
+            <i class="bi bi-exclamation-circle me-1"></i>{{ error }}<br>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">
+              <i class="bi bi-person-plus me-1"></i> Crear cuenta
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

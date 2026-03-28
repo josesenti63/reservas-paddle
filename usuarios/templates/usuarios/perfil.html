@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Mi perfil · Reservas Paddle{% endblock %}
+
+{% block contenido %}
+
+<!-- Encabezado -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="fw-800 mb-1">
+      <i class="bi bi-person-circle text-verde me-2"></i>Mi perfil
+    </h4>
+    <p class="text-muted small mb-0">
+      {{ user.get_full_name|default:user.username }}
+    </p>
+  </div>
+  <a href="{% url 'reservas:mis_reservas' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-card-list"></i> Mis reservas
+  </a>
+</div>
+
+<div class="row g-4">
+
+  <!-- Columna izquierda: formulario de perfil -->
+  <div class="col-12 col-md-7">
+    <div class="card">
+      <div class="card-header bg-white">
+        <i class="bi bi-pencil-square text-verde me-2"></i>
+        <strong>Datos personales</strong>
+      </div>
+      <div class="card-body p-4">
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="row g-3 mb-3">
+            <div class="col-6">
+              <label class="form-label">{{ form.first_name.label }}</label>
+              {{ form.first_name }}
+              {% if form.first_name.errors %}
+              <div class="text-danger small mt-1">{{ form.first_name.errors|join:", " }}</div>
+              {% endif %}
+            </div>
+            <div class="col-6">
+              <label class="form-label">{{ form.last_name.label }}</label>
+              {{ form.last_name }}
+              {% if form.last_name.errors %}
+              <div class="text-danger small mt-1">{{ form.last_name.errors|join:", " }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="text-danger small mt-1">{{ form.email.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">{{ form.telefono.label }}</label>
+            {{ form.telefono }}
+            <div class="form-text">Para recordatorios por WhatsApp</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">{{ form.numero_socio.label }}</label>
+            {{ form.numero_socio }}
+            <div class="form-text">Número de socio del club (si tenés)</div>
+          </div>
+
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle me-1"></i> Guardar cambios
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: últimas reservas -->
+  <div class="col-12 col-md-5">
+    <div class="card">
+      <div class="card-header bg-white">
+        <i class="bi bi-clock-history text-verde me-2"></i>
+        <strong>Últimas reservas</strong>
+      </div>
+
+      {% if ultimas_reservas %}
+      <ul class="list-group list-group-flush">
+        {% for reserva in ultimas_reservas %}
+        <li class="list-group-item px-3 py-3">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <div class="fw-600 small">{{ reserva.cancha.nombre }}</div>
+              <div class="text-muted" style="font-size:0.8rem;">
+                {{ reserva.fecha|date:"j/m/Y" }} ·
+                {{ reserva.horario.hora_inicio|time:"H:i" }}
+              </div>
+            </div>
+            {% if reserva.estado == 'confirmada' %}
+              <span class="badge-estado badge-confirmada">Confirmada</span>
+            {% elif reserva.estado == 'pendiente' %}
+              <span class="badge-estado badge-pendiente">Pendiente</span>
+            {% else %}
+              <span class="badge-estado badge-cancelada">Cancelada</span>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="card-footer text-center">
+        <a href="{% url 'reservas:mis_reservas' %}" class="text-verde small fw-600">
+          Ver todas mis reservas →
+        </a>
+      </div>
+      {% else %}
+      <div class="card-body empty-state py-4">
+        <span class="empty-icon" style="font-size:1.8rem;">📅</span>
+        <p class="small">Todavía no tenés reservas.</p>
+        <a href="{% url 'reservas:crear_reserva' %}" class="btn btn-success btn-sm">
+          Reservar ahora
+        </a>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- Cerrar sesión -->
+    <div class="card mt-3">
+      <div class="card-body p-3">
+        <form method="post" action="{% url 'usuarios:logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-danger w-100">
+            <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

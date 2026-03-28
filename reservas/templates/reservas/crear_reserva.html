@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Nueva reserva · Reservas Paddle{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-7 col-lg-5">
+
+        <!-- Encabezado -->
+         <div class="mb-4">
+            <h4 class="fw-800 mb-1">
+                <i class="bi bi-plus-circle text-verde me-2"></i> Nueva reserva
+            </h4>
+            <p class="text-mutes small mb-0">
+                Completá los datos para reservar tu cancha
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-body p-4">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <!-- Error general (disponibilidad) -->
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                        <i class="bi bi-exclamation-circle me-1"></i>{{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Cancha -->
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.cancha.label }}</label>
+                        {{ form.cancha }}
+                        {% if form.cancha.errors %}
+                        <div class="text-danger small mt-1">
+                            <i class="bi bi-exclamation-circle"></i> {{ form.cancha.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Fecha -->
+                    <div class="mb-3">
+                        <label class="form-label">{{ form.fecha.label }}</label>
+                        {{ form.fecha }}
+                        {% if form.fecha.help_text %}
+                        <div class="form-text">{{ form.fecha.help_text }}</div>
+                        {% endif %}
+                        {% if form.fecha.errors %}
+                        <div class="text-danger small mt-1">
+                            <i class="bi bi-exclamation-circle"></i> {{ form.fecha.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+        
+                    <!-- Horario -->
+                    <div class="mb-4">
+                        <label class="form-label">{{ form.horario.label }}</label>
+                        {{ form.horario }}
+                        {% if form.horario.errors %}
+                        <div class="text-danger small mt-1">
+                        <i class="bi bi-exclamation-circle"></i> {{ form.horario.errors|join:", " }}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-check-circle me-1"></i> Confirmar reserva
+                        </button>
+                        <a href="{% url 'reservas:inicio' %}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Nota informativa -->
+        <p class="text-muted text-center small mt-3">
+            <i class="bi bi-info-circle me-1"></i>
+            La reserva queda en estado <strong>pendiente</strong> hasta confirmar el pago.
+        </p>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Pre-seleccionar cancha y horario si vienen como parámetros GET
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('cancha'))  document.querySelector('#id_cancha').value  = params.get('cancha');
+  if (params.get('horario')) document.querySelector('#id_horario').value = params.get('horario');
+</script>
+{% endblock %}
